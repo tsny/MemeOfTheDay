@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
  
-import tweepy, time, sys, random, os
+import tweepy, time, sys, random, os, json
  
 # Finds the filename of a random meme to post
 def FindTodaysMeme():
@@ -18,21 +18,26 @@ def FindTodaysMeme():
 		print("Couldn't find an image")
 		exit()
 
-	print("posting " + randomFilename)
+	print("Got image:  " + randomFilename)
 
 	return path + randomFilename
 
 # Returns api handle
 def Login():
-    CONSUMER_KEY = 'W95yY7IX5RYeFRtSeFPJ2x94w'
-    CONSUMER_SECRET = 'NDyMk2VzQ4NIXGAVKJBsN2zruq6lS22VvkYkkPYmCMdpHs1DS0'
-    ACCESS_KEY = '2985422347-RGAVmVuHZUPqSB0QJzW7nLO9YLe414Em3PGqRzx' 
-    ACCESS_SECRET = 'msIbIF2ooiF20ikaKtvTLZnvD1bmAoE8Mawo9IsjaSuac'
-    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-    auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
-    api = tweepy.API(auth)
 
-    return api
+	with open(r"/home/tsny/MemeOfTheDay/login/loginDetails.json") as data_file:
+		data = json.load(data_file)
+
+	CONSUMER_KEY = data["loginDetails"]["consumerKey"]
+	CONSUMER_SECRET = data["loginDetails"]["consumerSecret"]
+	ACCESS_KEY = data["loginDetails"]["accessKey"]
+	ACCESS_SECRET = data["loginDetails"]["accessSecret"]
+
+	auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+	auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
+	api = tweepy.API(auth)
+
+	return api
 
 # Test Func that came with source, opens a file and posts something, ignore this
 def TestFunc():
