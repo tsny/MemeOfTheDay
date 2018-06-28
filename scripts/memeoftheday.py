@@ -56,16 +56,18 @@ def UpdateStatus(apiHandle, image):
 
 # --- MAIN --- 
 
-api = Login()
-todaysMeme = FindTodaysMeme()
+if __name__ == "__main__":
 
-try:
-	firstArg = sys.argv[1]
+    api = Login()
+    todaysMeme = FindTodaysMeme()
 
-except:
-	print("This was a test run. Add -r to post to Twitter")
-	exit()
+    try:
+        firstArg = sys.argv[1]
 
-else:
-	UpdateStatus(api, todaysMeme)
-	os.remove(todaysMeme)
+    except:
+        print("This was a test run. Add -r to post to Twitter")
+        exit()
+
+    else:
+        UpdateStatus(api, todaysMeme)
+        os.remove(todaysMeme)
