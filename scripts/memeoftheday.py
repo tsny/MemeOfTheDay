@@ -52,27 +52,23 @@ def TestFunc():
         time.sleep(900)#Tweet every 15 minutes
 
 def CheckForArgs():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-t', '--test', help = "Test the login. Does not post to Twitter.")
-    args = parser.parse_args()
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-t', '--test', action='store_true', help='Test the login. Does not post to Twitter.')
+	parser.add_argument('-km', '--keep', action='store_true', help='Do not delete the meme after posting.')
+	args = parser.parse_args()
 
-    if (args.test):
-        print("testing")
+	Main(args)
 
-def Main(testRun):
-    api = Login()
-    todaysMeme = FindTodaysMeme()
+def Main(args):
+	api = Login()
+	todaysMeme = FindTodaysMeme()
 
-    try:
-        firstArg = sys.argv[1]
+	if(args.test):
+		print("This was a test run... Nothing was posted")
+		exit()
 
-    except:
-        print("This was a test run. Add -r to post to Twitter")
-        exit()
-
-    else:
-        UpdateStatus(api, todaysMeme)
-        os.remove(todaysMeme)
+	UpdateStatus(api, todaysMeme)
+	os.remove(todaysMeme)
 
 def UpdateStatus(apiHandle, image):
     apiHandle.update_with_media(image, "#memeoftheday")
