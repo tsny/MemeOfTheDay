@@ -3,8 +3,8 @@
 
 #Test Comment
  
-import tweepy, time, sys, random, os, json
- 
+import tweepy, time, sys, random, os, json, argparse
+
 # Finds the filename of a random meme to post
 def FindTodaysMeme():
 	path = r"/home/tsny/MemeOfTheDay/memes/"
@@ -51,13 +51,12 @@ def TestFunc():
         api.update_status(line)
         time.sleep(900)#Tweet every 15 minutes
 
-def UpdateStatus(apiHandle, image):
-    apiHandle.update_with_media(image, "#memeoftheday")
+def CheckForArgs():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-t', '--test', help = "Test the login. Does not post to Twitter.")
+    args = parser.parse_args()
 
-# --- MAIN --- 
-
-if __name__ == "__main__":
-
+def Main():
     api = Login()
     todaysMeme = FindTodaysMeme()
 
@@ -71,3 +70,10 @@ if __name__ == "__main__":
     else:
         UpdateStatus(api, todaysMeme)
         os.remove(todaysMeme)
+
+def UpdateStatus(apiHandle, image):
+    apiHandle.update_with_media(image, "#memeoftheday")
+
+# --- MAIN --- 
+
+CheckForArgs()
