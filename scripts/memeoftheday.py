@@ -39,44 +39,33 @@ def Login():
 	auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 	api = tweepy.API(auth)
 
+	print("Login successful")
+
 	return api
 
-# Test Func that came with source, opens a file and posts something, ignore this
-def TestFunc():
-    filename=open(argfile,'r')
-    f=filename.readlines()
-    filename.close()
-     
-    for line in f:
-        api.update_status(line)
-        time.sleep(900)#Tweet every 15 minutes
-
 def CheckForArgs():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-t', '--test', help = "Test the login. Does not post to Twitter.")
-    args = parser.parse_args()
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-t', '--test', action='store_true', help='Test the login. Does not post to Twitter.')
+	parser.add_argument('-km', '--keep', action='store_true', help='Do not delete the meme after posting.')
 
-    if (args.test):
-        print("testing")
+	return parser.parse_args()
 
-def Main(testRun):
+def Main():
     api = Login()
     todaysMeme = FindTodaysMeme()
 
-    try:
-        firstArg = sys.argv[1]
+    args = CheckForArgs()
 
-    except:
-        print("This was a test run. Add -r to post to Twitter")
+    if(args.test):
+        print("This was a test run... Nothing was posted")
         exit()
 
-    else:
-        UpdateStatus(api, todaysMeme)
-        os.remove(todaysMeme)
+    UpdateStatus(api, todaysMeme)
+    os.remove(todaysMeme)
 
 def UpdateStatus(apiHandle, image):
     apiHandle.update_with_media(image, "#memeoftheday")
 
 # --- MAIN --- 
 
-CheckForArgs()
+Main()
