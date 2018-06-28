@@ -56,7 +56,10 @@ def CheckForArgs():
     parser.add_argument('-t', '--test', help = "Test the login. Does not post to Twitter.")
     args = parser.parse_args()
 
-def Main():
+    if (args.test):
+        print("testing")
+
+def Main(testRun):
     api = Login()
     todaysMeme = FindTodaysMeme()
 
