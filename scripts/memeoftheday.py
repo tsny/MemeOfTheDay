@@ -39,6 +39,8 @@ def Login():
 	auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 	api = tweepy.API(auth)
 
+    print("Login successful")
+
 	return api
 
 # Test Func that came with source, opens a file and posts something, ignore this
@@ -55,24 +57,25 @@ def CheckForArgs():
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-t', '--test', action='store_true', help='Test the login. Does not post to Twitter.')
 	parser.add_argument('-km', '--keep', action='store_true', help='Do not delete the meme after posting.')
-	args = parser.parse_args()
 
-	Main(args)
+	return parser.parse_args()
 
-def Main(args):
-	api = Login()
-	todaysMeme = FindTodaysMeme()
+def Main():
+    api = Login()
+    todaysMeme = FindTodaysMeme()
 
-	if(args.test):
-		print("This was a test run... Nothing was posted")
-		exit()
+    args = CheckForArgs()
 
-	UpdateStatus(api, todaysMeme)
-	os.remove(todaysMeme)
+    if(args.test):
+        print("This was a test run... Nothing was posted")
+        exit()
+
+    UpdateStatus(api, todaysMeme)
+    os.remove(todaysMeme)
 
 def UpdateStatus(apiHandle, image):
     apiHandle.update_with_media(image, "#memeoftheday")
 
 # --- MAIN --- 
 
-CheckForArgs()
+Main()
