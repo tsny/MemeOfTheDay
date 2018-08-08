@@ -60,6 +60,9 @@ def Main():
         print("This was a test run... Nothing was posted")
         exit()
 
+    if(args.keep):
+        print("keeping file...")
+
     UpdateStatus(api, todaysMeme)
     os.remove(todaysMeme)
 
