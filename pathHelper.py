@@ -6,5 +6,3 @@ def ValidateFiles():
 
     if not (path.exists('./memes')):
         raise FileNotFoundError('Could not find memes folder')
-
-ValidateFiles()
