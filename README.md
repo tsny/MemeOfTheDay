@@ -14,13 +14,13 @@ To use:
 5) Write your Consumer and Access keys and secrets into it in this format:
 
 {  
-    "loginDetails":  
-	{  
-        "consumerKey": "gasgasgsgsadgagasg",  
-        "consumerSecret": "gasdgasdftew geagasgsdagsdg",  
-        "accessKey": "4343262-gsadgsdfasdfewaysyta",  
-        "accessSecret": "6t34634fdsafdsaffdsfasfsdaf"
-	}  
+&nbsp;&nbsp;&nbsp;&nbsp;"loginDetails":  
+&nbsp;&nbsp;&nbsp;&nbsp;{  
+&nbsp;&nbsp;&nbsp;&nbsp;"consumerKey": "gasgasgsgsadgagasg",  
+&nbsp;&nbsp;&nbsp;&nbsp;"consumerSecret": "gasdgasdftew geagasgsdagsdg",  
+&nbsp;&nbsp;&nbsp;&nbsp;"accessKey": "4343262-gsadgsdfasdfewaysyta",  
+&nbsp;&nbsp;&nbsp;&nbsp;"accessSecret": "6t34634fdsafdsaffdsfasfsdaf"  
+&nbsp;&nbsp;&nbsp;&nbsp;}  
 }  
 
 6) Run memeoftheday.py
