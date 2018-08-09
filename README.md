@@ -24,3 +24,11 @@ To use:
 }  
 
 6) Run memeoftheday.py
+
+Arguments:
+
+-t, --test  
+Runs a test of the login, does not post to twitter
+
+-kp, -keep
+Does not delete meme after posting it
