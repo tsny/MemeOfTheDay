@@ -13,14 +13,14 @@ To use:
 4) Create a file called 'login.json'
 5) Write your Consumer and Access keys and secrets into it in this format:
 
-{
-	"loginDetails": 
-	{
-		"consumerKey": "gasgasgsgsadgagasg",
-		"consumerSecret": "gasdgasdftew geagasgsdagsdg",
-		"accessKey": "4343262-gsadgsdfasdfewaysyta",
-		"accessSecret": "6t34634fdsafdsaffdsfasfsdaf"
-	}
-}
+{  
+    "loginDetails":  
+	{  
+        "consumerKey": "gasgasgsgsadgagasg",  
+        "consumerSecret": "gasdgasdftew geagasgsdagsdg",  
+        "accessKey": "4343262-gsadgsdfasdfewaysyta",  
+        "accessSecret": "6t34634fdsafdsaffdsfasfsdaf"
+	}  
+}  
 
 6) Run memeoftheday.py
