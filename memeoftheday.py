@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import tweepy
 from pathHelper import ValidateFiles
-import time, sys, random, os, json, argparse
-from os import path
+import tweepy, time, sys, random, os, json, argparse
 
 # Finds the filename of a random meme to post
 
@@ -52,6 +50,9 @@ def CheckForArgs():
 
     return parser.parse_args()
 
+def UpdateStatus(apiHandle, image):
+    apiHandle.update_with_media(image, "#memeoftheday")
+
 def Main():
     ValidateFiles()
     api = Login()
@@ -70,9 +71,6 @@ def Main():
         exit()
 
     os.remove(todaysMeme)
-
-def UpdateStatus(apiHandle, image):
-    apiHandle.update_with_media(image, "#memeoftheday")
 
 # --- MAIN --- 
 
