@@ -5,7 +5,9 @@ A simple python project that posts a random meme from a supply on my server to m
 
 And yes those API keys from that first commit no longer work.
 
-To use:
+***
+
+### Usage:
 
 1) Clone this repo
 2) Create a folder in this repo called 'memes'
@@ -25,10 +27,12 @@ To use:
 
 6) Run memeoftheday.py
 
-Arguments:
+***
+
+### Arguments:
 
 -t, --test  
 Runs a test of the login, does not post to twitter
 
--kp, -keep
+-kp, --keep  
 Does not delete meme after posting it
