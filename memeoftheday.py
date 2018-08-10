@@ -4,9 +4,15 @@
 from pathHelper import ValidateFiles
 import tweepy, time, sys, random, os, json, argparse
 
-# Finds the filename of a random meme to post
 
 def FindTodaysMeme():
+    """ 
+    Finds the filename of a random meme to post
+
+    Returns:
+        str: relative file path to random .png/.jpg file
+    """
+
     path = r"./memes/"
 
     try:
@@ -24,8 +30,13 @@ def FindTodaysMeme():
 
     return path + randomFilename
 
-# Returns api handle
 def Login():
+    """
+    Opens login.json and authenticates Consumer/Access Keys via tweepy
+
+    Returns:
+        API Hanlde
+    """
 
     with open(r"./login.json") as data_file:
         data = json.load(data_file)

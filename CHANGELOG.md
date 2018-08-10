@@ -11,6 +11,7 @@
 
 - pathHelper.py handles file validation
 - GNU License
+- Login() and FindTodaysMeme() Documentation Comments
 
 ### Removed
 
