@@ -12,8 +12,8 @@ And yes those API keys from that first commit no longer work.
 1) Clone this repo
 2) Create a folder in this repo called 'memes'
 3) Put a .jpg or .png in the new 'memes' folder
-4) Create a file called 'login.json'
-5) Write your Consumer and Access keys and secrets into it in this format:
+4) Run the program for the first time or create a file called 'login.json'
+4a) If you're creating the json file by hand: write your Consumer and Access keys and secrets into it in this format:
 
 {  
 &nbsp;&nbsp;&nbsp;&nbsp;"loginDetails":  
