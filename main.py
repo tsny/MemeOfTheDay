@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from pathHelper import ValidateFiles
+#from setup import ValidateFiles
 import tweepy, time, sys, random, os, json, argparse
+from setup import ValidateFiles, FirstTimeSetup
 
 
 def FindTodaysMeme():
@@ -23,7 +24,7 @@ def FindTodaysMeme():
         ])
 
     except:
-        print("Couldn't find an image")
+        print("Couldn't find an image in ./memes")
         exit()
 
     print("Got image:  " + randomFilename)
@@ -32,13 +33,13 @@ def FindTodaysMeme():
 
 def Login():
     """
-    Opens login.json and authenticates Consumer/Access Keys via tweepy
+    Opens settings.json and authenticates Consumer/Access Keys via tweepy
 
     Returns:
-        API Hanlde
+        API handle
     """
 
-    with open(r"./login.json") as data_file:
+    with open(r"./settings.json") as data_file:
         data = json.load(data_file)
 
     CONSUMER_KEY = data["loginDetails"]["consumerKey"]
@@ -50,7 +51,12 @@ def Login():
     auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
     api = tweepy.API(auth)
 
-    print("Login successful")
+    try:
+        print("Logged in as " + api.me().name)
+
+    except:
+        print("Credentials invalid; Update settings.json...")
+        exit()
 
     return api
 
@@ -58,6 +64,7 @@ def CheckForArgs():
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', '--test', action='store_true', help='Test the login. Does not post to Twitter.')
     parser.add_argument('-km', '--keep', action='store_true', help='Do not delete the meme after posting.')
+    parser.add_argument('-sp', '--setup', action='store_true', help='Delete settings.json if it exists and get consumer/access keys from user.')
 
     return parser.parse_args()
 
@@ -65,11 +72,16 @@ def UpdateStatus(apiHandle, image):
     apiHandle.update_with_media(image, "#memeoftheday")
 
 def Main():
+    args = CheckForArgs()
+
+    if(args.setup):
+        os.remove('settings.json')
+        FirstTimeSetup()
+
     ValidateFiles()
     api = Login()
     todaysMeme = FindTodaysMeme()
 
-    args = CheckForArgs()
 
     if(args.test):
         print("This was a test run... Nothing was posted")
