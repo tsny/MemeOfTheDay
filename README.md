@@ -37,5 +37,5 @@ Runs a test of the login, does not post to twitter
 -kp, --keep  
 Does not delete meme after posting it
 
--sp, --setup
+-sp, --setup  
 Deletes the settings.json file if it exists and gets the consumer/access keys from the user's input
