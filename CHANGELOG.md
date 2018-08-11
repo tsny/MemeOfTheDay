@@ -11,6 +11,7 @@
 
 - First time setup if settings.json does not exist
 - Verifies if settings.json is correct and credentials are correct
+- -sp, --setup argument that recreates settings.json and gets twitter credentials from user input
 
 ## [0.0.1] - Aug 8, 2018
 ### Changed

@@ -1,3 +1,4 @@
 .vs/
 memes/
 *.json
+__pycache__/

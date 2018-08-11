@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#from setup import ValidateFiles
 import tweepy, time, sys, random, os, json, argparse
 from setup import ValidateFiles, FirstTimeSetup
 
@@ -61,15 +60,16 @@ def Login():
     return api
 
 def CheckForArgs():
+    '''
+    Adds arguments to program
+    '''
+
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', '--test', action='store_true', help='Test the login. Does not post to Twitter.')
     parser.add_argument('-km', '--keep', action='store_true', help='Do not delete the meme after posting.')
     parser.add_argument('-sp', '--setup', action='store_true', help='Delete settings.json if it exists and get consumer/access keys from user.')
 
     return parser.parse_args()
-
-def UpdateStatus(apiHandle, image):
-    apiHandle.update_with_media(image, "#memeoftheday")
 
 def Main():
     args = CheckForArgs()
@@ -82,12 +82,11 @@ def Main():
     api = Login()
     todaysMeme = FindTodaysMeme()
 
-
     if(args.test):
         print("This was a test run... Nothing was posted")
         exit()
 
-    UpdateStatus(api, todaysMeme)
+    api.update_with_media(todaysMeme, "#memeoftheday")
 
     if(args.keep):
         print("keeping file...")
@@ -95,6 +94,5 @@ def Main():
 
     os.remove(todaysMeme)
 
-# --- MAIN --- 
-
-Main()
+if __name__ == "__main__":
+    Main()
