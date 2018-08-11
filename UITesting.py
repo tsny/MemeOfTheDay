@@ -6,20 +6,35 @@ class Application(tk.Frame):
         self.pack()
         self.createWidgets()
 
+    def testFunc(self):
+        print("test")
+
     def createWidgets(self):
-        self.hi_there = tk.Button(self)
-        self.hi_there["text"] = "Hello World\n(click me)"
-        self.hi_there["command"] = self.say_hi
-        self.hi_there.pack(side="top")
+        self.consumerKeyEntry = tk.Entry()
+        self.consumerKeyEntry.pack()
+
+        self.consumerSecretEntry = tk.Entry()
+        self.consumerSecretEntry.pack()
+
+        self.accessKeyEntry = tk.Entry()
+        self.accessKeyEntry.pack()
+
+        self.accessSecretEntry = tk.Entry()
+        self.accessSecretEntry.pack()
 
         self.QUIT = tk.Button(self, text="QUIT", fg="red",
                                             command=root.destroy)
+
         self.QUIT.pack(side="bottom")
 
-    def say_hi(self):
-        print("hi there, everyone!")
+        self.update = tk.Button(self, text="Update Settings", command=self.testFunc)
+        self.update.pack()
+
 
 root = tk.Tk()
+root.geometry("300x300")
+root.title("Settings")
+root.resizable(False, False)
+
 app = Application(master=root)
 app.mainloop()
-
