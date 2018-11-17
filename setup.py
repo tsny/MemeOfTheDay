@@ -3,14 +3,17 @@ import sys, json, os
 
 def ValidateFiles():
     if not (path.isfile('settings.json')):
-        FirstTimeSetup()
+        ManualCredEntry()
 
     if not (path.exists('./memes')):
         print('Could not find memes folder')
         exit()
 
-def FirstTimeSetup():
-    print("Running first time setup, get your Consumer/Access keys from apps.twitter.com")
+    return
+
+def ManualCredEntry():
+
+    print("Please manually enter your twitter credentials...")
 
     consumerKey = input("Enter your consumer key: ")
     consumerSecret = input("Enter your consumer secret: ")
@@ -28,4 +31,36 @@ def FirstTimeSetup():
     with open('settings.json', 'x') as outfile:
         json.dump(data, outfile, indent=4)
 
-    return 
+    return
+
+def WriteToSettingsFile(input):
+
+    data =  { 'loginDetails':  
+                {
+                    'consumerKey' : consumerKey,
+                    'consumerSecret' : consumerSecret,
+                    'accessKey' : accessKey,
+                    'accessSecret' : accessSecret}
+                }
+        
+def GetCredentialsFromFile():
+
+    try:
+        data_file = open(r"./settings.json")
+        data = json.load(data_file)
+
+    except IOError:
+        print("ERROR: Couldn't find settings.json")
+        ManualCredEntry()
+
+    CONSUMER_KEY = data["loginDetails"]["consumerKey"]
+    CONSUMER_SECRET = data["loginDetails"]["consumerSecret"]
+    ACCESS_KEY = data["loginDetails"]["accessKey"]
+    ACCESS_SECRET = data["loginDetails"]["accessSecret"]
+
+    creds = [CONSUMER_KEY, CONSUMER_SECRET, ACCESS_KEY, ACCESS_SECRET]
+
+    data_file.close()
+
+    return creds
+

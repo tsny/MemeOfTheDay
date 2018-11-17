@@ -1,8 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import tweepy, time, sys, random, os, json, argparse
-from setup import ValidateFiles, FirstTimeSetup
+import tweepy
+import time
+import sys
+import random
+import os
+import json
+import argparse
+from setup import *
+from view import *
 
 
 def FindTodaysMeme():
@@ -23,12 +30,13 @@ def FindTodaysMeme():
         ])
 
     except:
-        print("Couldn't find an image in ./memes")
+        print("ERROR: Couldn't find an image in ./memes")
         exit()
 
     print("Got image:  " + randomFilename)
 
     return path + randomFilename
+
 
 def Login():
     """
@@ -38,26 +46,21 @@ def Login():
         API handle
     """
 
-    with open(r"./settings.json") as data_file:
-        data = json.load(data_file)
+    creds = GetCredentialsFromFile()
 
-    CONSUMER_KEY = data["loginDetails"]["consumerKey"]
-    CONSUMER_SECRET = data["loginDetails"]["consumerSecret"]
-    ACCESS_KEY = data["loginDetails"]["accessKey"]
-    ACCESS_SECRET = data["loginDetails"]["accessSecret"]
-
-    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-    auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
+    auth = tweepy.OAuthHandler(creds[0], creds[1])
+    auth.set_access_token(creds[2], creds[3])
     api = tweepy.API(auth)
 
     try:
         print("Logged in as " + api.me().name)
 
     except:
-        print("Credentials invalid; Update settings.json...")
+        print("ERROR: Credentials invalid; Check settings.json...")
         exit()
 
     return api
+
 
 def CheckForArgs():
     '''
@@ -65,18 +68,22 @@ def CheckForArgs():
     '''
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-t', '--test', action='store_true', help='Test the login. Does not post to Twitter.')
-    parser.add_argument('-km', '--keep', action='store_true', help='Do not delete the meme after posting.')
-    parser.add_argument('-sp', '--setup', action='store_true', help='Delete settings.json if it exists and get consumer/access keys from user.')
+    parser.add_argument('-m', '--manual', action='store_true', help="MANUAL. Run this to manually write your creds to settings.json via cmd line")
+    parser.add_argument('-t', '--test', action='store_true',
+                        help='TEST. Test the login. Does not post to Twitter.')
+    parser.add_argument('-km', '--keep', action='store_true',
+                        help='KEEP MEME. Do not delete the meme after posting.')
+    parser.add_argument('-sp', '--setup', action='store_true',
+                        help='SETUP. Delete settings.json if it exists and get consumer/access keys from user.')
 
     return parser.parse_args()
+
 
 def Main():
     args = CheckForArgs()
 
     if(args.setup):
-        os.remove('settings.json')
-        FirstTimeSetup()
+        CreateWindow()
 
     ValidateFiles()
     api = Login()
@@ -89,10 +96,12 @@ def Main():
     api.update_with_media(todaysMeme, "#memeoftheday")
 
     if(args.keep):
-        print("keeping file...")
+        print("Keeping meme...")
         exit()
 
     os.remove(todaysMeme)
+
+    return
 
 if __name__ == "__main__":
     Main()
